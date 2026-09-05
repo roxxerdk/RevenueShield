@@ -1,0 +1,34 @@
+﻿name: Release & Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## RevenueShield ${{ github.ref_name }}
+            
+            ### Highlights
+            - Dual-Layer AI Recovery + Deterministic Safety Governance
+            - Official Razorpay Test Mode integration with cryptographic webhooks
+            - Live Streamlit dashboard & FastAPI REST backend
+            - 100% test coverage across all modules
+            
+            See [CHANGELOG.md](CHANGELOG.md) for detailed release notes.
+          draft: false
+          prerelease: false

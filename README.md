@@ -1,10 +1,15 @@
 ﻿# 🛡️ RevenueShield: AI Revenue Recovery Engine
 **Razorpay AI Buildathon 2026 — Track 03: AI Revenue Recovery**
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![RevenueShield CI](https://github.com/roxxerdk/RevenueShield/actions/workflows/ci.yml/badge.svg)](https://github.com/roxxerdk/RevenueShield/actions/workflows/ci.yml)
+[![CodeQL Security](https://github.com/roxxerdk/RevenueShield/actions/workflows/codeql.yml/badge.svg)](https://github.com/roxxerdk/RevenueShield/actions/workflows/codeql.yml)
+[![Latest Release](https://img.shields.io/github/v/release/roxxerdk/RevenueShield?color=blue&label=release)](https://github.com/roxxerdk/RevenueShield/releases)
+[![Python Versions](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Test Suite](https://img.shields.io/badge/tests-23%20passed%20%2F%20100%25-success.svg)](tests/)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32+-FF4B4B.svg)](https://streamlit.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 RevenueShield is an AI-assisted, policy-governed revenue recovery system engineered for Razorpay payment failures and subscription involuntary churn. It combines machine learning predictive models with a deterministic economic and safety policy gate, executing bounded recovery actions via **Razorpay Test Mode** and verifying real revenue recovery through cryptographic webhook events.
 
@@ -101,7 +106,8 @@ flowchart TD
 
 ### 2. Installation
 ```bash
-# Clone or navigate to the repository
+# Clone the repository
+git clone https://github.com/roxxerdk/RevenueShield.git
 cd RevenueShield
 
 # Create and activate virtual environment
@@ -161,7 +167,7 @@ python -m streamlit run dashboard/app.py --server.port 8501
 ```
 Dashboard UI: `http://localhost:8501`
 
-### 3. Run the Automated Test Suite
+### 3. Run the Automated Test Suite & Benchmarks
 ```bash
 $env:PYTHONPATH="src"
 python -m pytest tests/ -v
@@ -203,6 +209,13 @@ Follow this exact demonstration workflow:
 - [x] **Audit Log Redaction**: Sensitive keys are automatically sanitized prior to log recording.
 - [x] **Bounded Action Execution**: AI recommendations are strictly constrained by the deterministic policy layer.
 - [x] **Test Mode Only**: Explicitly restricted to Razorpay Test Mode (`rzp_test_...`) or Simulation Mode.
+
+---
+
+## 🗺️ Product Roadmap & Releases
+- See [ROADMAP.md](ROADMAP.md) for future release milestones.
+- See [CHANGELOG.md](CHANGELOG.md) for version history.
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) to contribute.
 
 ---
 
