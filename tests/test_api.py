@@ -1,4 +1,5 @@
 ﻿"""Tests for FastAPI endpoints."""
+import uuid
 import pytest
 from fastapi.testclient import TestClient
 from api.main import app
@@ -28,7 +29,7 @@ def test_metrics_endpoint():
     assert "recovery_rate_pct" in data
 
 def test_evaluate_and_execute_endpoint():
-    txn_id = "API_TEST_TXN_001"
+    txn_id = f"API_TEST_TXN_{uuid.uuid4().hex[:8]}"
     eval_payload = {
         "transaction_id": txn_id,
         "amount": 4000.0,
@@ -58,7 +59,8 @@ def test_evaluate_and_execute_endpoint():
     sim_payload = {"amount": 4000.0, "status": "captured"}
     res_sim = client.post(f"/api/recoveries/{txn_id}/simulate-payment", json=sim_payload)
     assert res_sim.status_code == 200
-    assert res_sim.json()["result"]["recovered"] is True
+    sim_res = res_sim.json()["result"]
+    assert sim_res.get("recovered") is True
 
     # 4. Get detail
     res_detail = client.get(f"/api/recoveries/{txn_id}")

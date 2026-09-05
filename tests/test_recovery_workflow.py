@@ -1,10 +1,10 @@
 ﻿"""Tests for Recovery Workflow and Webhook Processing."""
 import json
+import uuid
 import pytest
 from recovery_workflow import RevenueRecoveryWorkflow
-from models.db_models import RecoveryState
+from models.db_models import RecoveryState, RecoveryCase
 from database import get_db_session
-from models.db_models import RecoveryCase
 
 def test_workflow_risk_detection():
     wf = RevenueRecoveryWorkflow()
@@ -15,8 +15,9 @@ def test_workflow_risk_detection():
 
 def test_workflow_run_and_execution():
     wf = RevenueRecoveryWorkflow()
+    tx_id = f"TEST_WF_{uuid.uuid4().hex[:8]}"
     txn = {
-        "transaction_id": "TEST_WF_TXN_999",
+        "transaction_id": tx_id,
         "amount": 3500.0,
         "currency": "INR",
         "status": "failed",
@@ -38,7 +39,8 @@ def test_workflow_run_and_execution():
 
 def test_webhook_idempotency_and_recovery_verification():
     wf = RevenueRecoveryWorkflow()
-    tx_id = "TEST_WF_RECOVER_01"
+    tx_id = f"TEST_WF_RECOV_{uuid.uuid4().hex[:8]}"
+    event_id = f"evt_test_{uuid.uuid4().hex[:8]}"
     
     # Initialize a case
     wf.run({
@@ -50,14 +52,13 @@ def test_webhook_idempotency_and_recovery_verification():
     })
 
     # Webhook payload for payment.captured
-    event_id = "evt_test_unique_1001"
     payload = {
         "event": "payment.captured",
         "payload": {
             "payment": {
                 "entity": {
-                    "id": "pay_test_recov_1001",
-                    "order_id": "order_test_recov_1001",
+                    "id": f"pay_{uuid.uuid4().hex[:8]}",
+                    "order_id": f"order_{uuid.uuid4().hex[:8]}",
                     "amount": 250000,
                     "currency": "INR",
                     "status": "captured",
